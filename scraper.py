@@ -1,5 +1,4 @@
 from requests import get
-from colorful import colorful as cf
 
 
 class Scraper:
