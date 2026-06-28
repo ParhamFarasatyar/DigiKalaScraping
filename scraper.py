@@ -1,4 +1,5 @@
 from requests import get
+from typing import Generator
 
 
 class Scraper:
@@ -6,7 +7,7 @@ class Scraper:
         self.max_pages = 30
         self.url = "https://api.digikala.com/discovery/api/v1/search"
     
-    def get_data(self, title: str, page_number: int):
+    def get_data(self, title: str, page_number: int) -> Generator:
         for page in range(page_number):
             new_url = self.url + f"?page={page + 1}&q={title}"
             data = get(new_url)

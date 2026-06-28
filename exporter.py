@@ -7,7 +7,7 @@ class Exporter:
     def __init__(self) -> None:
         self.save_path = Path("./data/data.csv")
     
-    def save_data(self, data):
+    def save_data(self, data) -> None:
         try:
             data = pd.DataFrame(data)
             pd.DataFrame.to_csv(data, self.save_path)
