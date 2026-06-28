@@ -2,9 +2,10 @@ class Parser:
     def __init__(self) -> None:
         self.data_dict = {}
     
-    def extract_data(self, data, stars):
+    def extract_data(self, data, stars) -> dict[str, float]:
+        number_of_product = 1
         for products in data:
-            for i, product in enumerate(products.json()["data"]["products"]):
+            for product in products.json()["data"]["products"]:
                 product_title = product["title_en"]
                 if not product_title:
                     product_title = product["title_fa"]
@@ -16,11 +17,12 @@ class Parser:
                 if product_stars < stars:
                     continue
 
-                self.data_dict[f"product{i + 1}"] = {
+                self.data_dict[f"product{number_of_product}"] = {
                     "title": product_title,
                     "stars": product_stars,
                     "price": product_price,
                     "url": product_url
                     }
+                number_of_product += 1
         
         return self.data_dict
