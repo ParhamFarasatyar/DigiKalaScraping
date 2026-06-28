@@ -28,7 +28,7 @@ class Main:
             print(self.invalid_input)
         else:
             data_iter = iter(self.scraper.get_data(search_title, page_number))
-            print("hello")
+            data = self.parser.extract_data(data_iter, stars)
 
 
 if __name__ == "__main__":
