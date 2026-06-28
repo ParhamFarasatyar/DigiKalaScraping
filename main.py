@@ -17,9 +17,14 @@ class Main:
         search_title = str(input(">>> "))
         print("How many pages you want to collect?")
         try:
-            page_number = int(input(">>> "))
-            print("How many stars product got?")
             while True:
+                page_number = int(input(">>> "))
+                if not 1 <= page_number <= self.scraper.max_pages:
+                    print(self.invalid_input)
+                else:
+                    break
+            while True:
+                print("How many stars product got?")
                 stars = float(input(">>> "))
                 if not 1 <= stars <= 5:
                     print(self.invalid_input)
@@ -28,6 +33,7 @@ class Main:
                     break
         except ValueError:
             print(self.invalid_input)
+            self.run()
         else:
             # Scraper get data from website
             data_iter = iter(self.scraper.get_data(search_title, page_number))
