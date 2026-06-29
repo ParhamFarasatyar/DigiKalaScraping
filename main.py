@@ -16,28 +16,12 @@ class Main:
     def run(self) -> None:
         welcome = figlet_format("DigiKala Scraping!")
         print(self.log.run_msg(welcome))
+
         print("What do you looking for?")
         search_title = str(input(">>> "))
-        print("How many pages you want to collect?")
-        try:
-            while True:
-                page_number = int(input(">>> "))
-                if not 1 <= page_number <= self.scraper.max_pages:
-                    print(self.log.error_msg("Invalid input!"))
-                else:
-                    break
-            while True:
-                print("How many stars product got?")
-                stars = float(input(">>> "))
-                if not 1 <= stars <= 5:
-                    print(self.log.error_msg("Invalid input!"))
-                    stars = float(input(">>> "))
-                else:
-                    break
-        except ValueError:
-            print(self.log.error_msg("Invalid input!"))
-            self.run()
-        else:
+
+        page_number, stars = self.log.checking_user_input()
+        if page_number and stars:
             # Scraper get data from website
             print(self.log.info_msg("Collecting data..."))
             data = self.scraper.get_data(search_title, page_number)
@@ -56,6 +40,8 @@ class Main:
 
             print(self.log.bye_msg(
                 f"Data for {search_title.title()} successfully collected."))
+        else:
+            page_number, stars = self.log.checking_user_input()
 
 
 
