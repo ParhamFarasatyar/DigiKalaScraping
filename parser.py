@@ -1,18 +1,35 @@
 class Parser:
     def __init__(self) -> None:
-        self.data_dict = {}
-    
-    def extract_data(self, data, stars: float) -> dict[str, float]:
-        number_of_product = 1
-        for products in data:
-            for product in products.json()["data"]["products"]:
-                product_title = product["title_en"]
-                if not product_title:
-                    product_title = product["title_fa"]
+        self.data_dict: dict[str, dict[str, object]] = {}
 
-                product_stars = product["default_variant"]["seller"]["stars"]
-                product_price = product["default_variant"]["price"]["selling_price"]
-                product_url = "https://www.digikala.com" + product["url"]["uri"]
+    def extract_data(self, data, stars: float) -> dict[str, dict[str, object]]:
+        self.data_dict = {}
+        number_of_product = 1
+
+        for response in data:
+            try:
+                products = response.json().get("data", {}).get("products", [])
+            except Exception:
+                continue
+
+            for product in products:
+                title_en = product.get("title_en") or ""
+                title_fa = product.get("title_fa") or ""
+                product_title = title_en or title_fa or "No title"
+
+                default_variant = product.get("default_variant", {}) or {}
+                seller = default_variant.get("seller", {}) or {}
+                price_info = default_variant.get("price", {}) or {}
+                url_info = product.get("url", {}) or {}
+
+                product_stars = seller.get("stars", 0)
+                product_price = price_info.get("selling_price", 0)
+                product_url = "https://www.digikala.com" + url_info.get("uri", "")
+
+                try:
+                    product_stars = float(product_stars)
+                except (TypeError, ValueError):
+                    product_stars = 0.0
 
                 if product_stars < stars:
                     continue
@@ -21,8 +38,8 @@ class Parser:
                     "title": product_title,
                     "stars": product_stars,
                     "price": product_price,
-                    "url": product_url
-                    }
+                    "url": product_url,
+                }
                 number_of_product += 1
-        
+
         return self.data_dict

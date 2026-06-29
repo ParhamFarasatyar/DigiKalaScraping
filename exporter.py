@@ -1,17 +1,17 @@
-import pandas as pd
 from pathlib import Path
-from os import mkdir
+import pandas as pd
 
 
 class Exporter:
     def __init__(self) -> None:
         self.save_path = Path("./data/data.csv")
-    
+
     def save_data(self, data) -> None:
-        try:
-            data = pd.DataFrame(data)
-            pd.DataFrame.to_csv(data, self.save_path)
-        except OSError:
-            mkdir(Path("./data"))
-            data = pd.DataFrame(data)
-            pd.DataFrame.to_csv(data, self.save_path)
+        self.save_path.parent.mkdir(parents=True, exist_ok=True)
+
+        if not data:
+            pd.DataFrame(columns=["title", "stars", "price", "url"]).to_csv(self.save_path, index=False)
+            return
+
+        frame = pd.DataFrame.from_dict(data, orient="index")
+        frame.to_csv(self.save_path, index_label="product_id")
