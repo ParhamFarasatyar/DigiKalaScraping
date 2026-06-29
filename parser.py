@@ -2,7 +2,7 @@ class Parser:
     def __init__(self) -> None:
         self.data_dict = {}
     
-    def extract_data(self, data, stars) -> dict[str, float]:
+    def extract_data(self, data, stars: float) -> dict[str, float]:
         number_of_product = 1
         for products in data:
             for product in products.json()["data"]["products"]:
