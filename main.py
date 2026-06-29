@@ -28,6 +28,8 @@ class Main:
             if data:
                 data_iter = iter(data)
             else:
+                print(self.log.error_msg(
+                    f"No matches found for {search_title}!"))
                 return
 
             # Data that we have gotten, sent to parser to exctract data
