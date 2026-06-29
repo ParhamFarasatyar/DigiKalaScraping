@@ -9,7 +9,7 @@ class Scraper:
         self.url = "https://api.digikala.com/discovery/api/v1/search"
         self.log = Log()
     
-    def get_data(self, title: str, page_number: int) -> Generator:
+    def get_data(self, title: str, page_number: int) -> Generator | None:
         for page in range(page_number):
             new_url = self.url + f"?page={page + 1}&q={title}"
             data = get(new_url)
@@ -22,3 +22,4 @@ class Scraper:
                     self.get_data(title, page_number)
                 else:
                     print(self.log.error_msg("Program stopped!"))
+                    return
