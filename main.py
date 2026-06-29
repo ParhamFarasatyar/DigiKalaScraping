@@ -40,7 +40,11 @@ class Main:
         else:
             # Scraper get data from website
             print(self.log.info_msg("Collecting data..."))
-            data_iter = iter(self.scraper.get_data(search_title, page_number))
+            data = self.scraper.get_data(search_title, page_number)
+            if data:
+                data_iter = iter(data)
+            else:
+                return
 
             # Data that we have gotten, sent to parser to exctract data
             print(self.log.info_msg("Exctracting..."))
