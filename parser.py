@@ -1,8 +1,11 @@
 class Parser:
+    """Parser class to extract relevant product data from the scraped data."""
     def __init__(self) -> None:
+        """Initialize the Parser class with an empty data dictionary."""
         self.data_dict: dict[str, dict[str, object]] = {}
 
     def extract_data(self, data, stars: float) -> dict[str, dict[str, object]]:
+        """Extract relevant product data from the scraped data based on the star rating filter."""
         self.data_dict = {}
         number_of_product = 1
 

@@ -3,12 +3,15 @@ from log import Log
 
 
 class Scraper:
+    """Scraper class to handle API requests and data collection."""
     def __init__(self) -> None:
+        """Initialize the Scraper class with the maximum number of pages and the API URL."""
         self.max_pages = 30
         self.url = "https://api.digikala.com/discovery/api/v1/search"
         self.log = Log()
 
     def get_data(self, title: str, page_number: int) -> list:
+        """Get the data from the API based on the search title and page number."""
         responses = []
         for page in range(1, page_number + 1):
             response = None

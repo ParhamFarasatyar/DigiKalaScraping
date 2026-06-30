@@ -6,13 +6,16 @@ from log import Log
 
 
 class Main:
+    """Main class to run the scraping process."""
     def __init__(self) -> None:
+        """Initialize the Main class with Scraper, Parser, Exporter, and Log instances."""
         self.scraper = Scraper()
         self.parser = Parser()
         self.exporter = Exporter()
         self.log = Log()
 
     def run(self) -> None:
+        """Run the scraping process."""
         welcome = figlet_format("DigiKala Scraping!")
         print(self.log.run_msg(welcome))
 
